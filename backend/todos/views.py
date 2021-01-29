@@ -1,10 +1,15 @@
 # Create your views here.
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 
 from .models import Todo
 from .serializers import TodoSerializer
 
 
-class TodoView(viewsets.ModelViewSet):
-    serializer_class = TodoSerializer
+class ListTodo(generics.ListAPIView):
     queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+
+class DetailTodo(generics.RetrieveAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer

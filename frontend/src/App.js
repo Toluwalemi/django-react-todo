@@ -18,18 +18,22 @@ class App extends Component {
 	componentDidMount() {
 		this.refreshList();
 	}
+
 	refreshList = () => {
+		// updates page to display recent options for each request
 		axios
 			.get("http://localhost:8000/api/todos/")
 			.then((res) => this.setState({ todoList: res.data }))
 			.catch((err) => console.log(err));
 	};
+
 	displayCompleted = (status) => {
 		if (status) {
 			return this.setState({ viewCompleted: true });
 		}
 		return this.setState({ viewCompleted: false });
 	};
+
 	renderTabList = () => {
 		return (
 			<div className="my-5 tab-list">
@@ -48,6 +52,7 @@ class App extends Component {
 			</div>
 		);
 	};
+
 	renderItems = () => {
 		const { viewCompleted } = this.state;
 		const newItems = this.state.todoList.filter(
@@ -60,7 +65,7 @@ class App extends Component {
 			>
 				<span
 					className={`todo-title mr-2 ${
-						this.state.viewCompleted ? "completed-todo" : ""
+						viewCompleted ? "completed-todo" : ""
 					}`}
 					title={item.description}
 				>
@@ -71,23 +76,25 @@ class App extends Component {
 						onClick={() => this.editItem(item)}
 						className="btn btn-secondary mr-2"
 					>
-						{" "}
-						Edit{" "}
+
+						Edit
 					</button>
 					<button
 						onClick={() => this.handleDelete(item)}
 						className="btn btn-danger"
 					>
-						Delete{" "}
+						Delete
 					</button>
 				</span>
 			</li>
 		));
 	};
 	toggle = () => {
+		// controls the modal state; open or close
 		this.setState({ modal: !this.state.modal });
 	};
 	handleSubmit = (item) => {
+		// handles create and update operations
 		this.toggle();
 		if (item.id) {
 			axios
