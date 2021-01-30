@@ -126,6 +126,8 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
 )
 
+AUTH_USER_MODEL = "users.NewUser"
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
