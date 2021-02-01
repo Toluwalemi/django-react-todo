@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "./components/Modal";
-import axios from "axios";
+import axiosInstance from "./axios";
 
 import "./App.css"
 
@@ -23,8 +23,8 @@ class App extends Component {
 
 	refreshList = () => {
 		// updates page to display recent options for each request
-		axios
-			.get("http://localhost:8000/api/todos/")
+		axiosInstance
+			.get("/")
 			.then((res) => this.setState({ todoList: res.data }))
 			.catch((err) => console.log(err));
 	};
@@ -99,17 +99,17 @@ class App extends Component {
 		// handles create and update operations
 		this.toggle();
 		if (item.id) {
-			axios
+			axiosInstance
 				.put(`http://localhost:8000/api/todos/${item.id}/`, item)
 				.then((res) => this.refreshList());
 			return;
 		}
-		axios
+		axiosInstance
 			.post("http://localhost:8000/api/todos/", item)
 			.then((res) => this.refreshList());
 	};
 	handleDelete = (item) => {
-		axios
+		axiosInstance
 			.delete(`http://localhost:8000/api/todos/${item.id}`)
 			.then((res) => this.refreshList());
 	};
